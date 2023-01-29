@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import TheatersIcon from "@mui/icons-material/Theaters";
 import {
   AppBar,
   Toolbar,
@@ -7,15 +9,21 @@ import {
   Tabs,
   Tab,
 } from "@mui/material";
-import TheatersIcon from "@mui/icons-material/Theaters";
-import { useState } from "react";
+import { getAllMovies } from "../api-helpers/api-helpers";
+import { Link } from "react-router-dom";
 
-const dummyArray = ["memmory", "bahubali", "kashmirfiles", "kathi"];
 
 const Header = () => {
   const [value, setValue] = useState(0);
+  const [movies, setMovies] = useState([])
+  useEffect(() => {
+    getAllMovies()
+      .then((data) => setMovies(data.movies))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
-    <AppBar sx={{ bgcolor: "#2b2d42" }}>
+    <AppBar position="sticky" sx={{ bgcolor: "#2b2d42"}}>
       <Toolbar>
         <Box>
           <TheatersIcon />
@@ -23,13 +31,13 @@ const Header = () => {
         <Box width="35%" margin="auto">
           <Autocomplete
             freeSolo
-            options={dummyArray.map((option) => option)}
+            options={movies &&movies.map((option) => option.title)}
             renderInput={(params) => (
               <TextField
-                sx={{ input : {color: "white"} }}
+                sx={{ input: { color: "white" } }}
                 variant="standard"
                 {...params}
-                placeholder   ="Search across movies"
+                placeholder="Search across movies"
               />
             )}
           />
@@ -41,9 +49,10 @@ const Header = () => {
             value={value}
             onChange={(e, val) => setValue(val)}
           >
-            <Tab label="Movies" />
-            <Tab label="Admin" />
-            <Tab label="Auth" />
+           
+            <Tab LinkComponent={ Link } to="/movies" label="Movies" />
+            <Tab LinkComponent={ Link } to="/admin" label="Admin" />
+            <Tab LinkComponent={ Link } to="/auth" label="Auth" />
           </Tabs>
         </Box>
       </Toolbar>

@@ -10,7 +10,8 @@ import {
 import React, { useState } from "react";
 import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultRounded";
 const labelStyle = { mt: 1, mb: 1 };
-const AuthForm = () => {
+
+const AuthForm = ({ onSubmit, isAdmin }) => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [formInputs, setFormInputs] = useState({
     name: "",
@@ -21,11 +22,11 @@ const AuthForm = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormInputs({ ...formInputs, [name]: value });
-  };
+  }; 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formInputs);
+    onSubmit({formInputs , signup: isAdmin? false : isSignUp});
   };
 
   return (
@@ -36,7 +37,7 @@ const AuthForm = () => {
         </IconButton>
       </Box>
       <Typography variant="h4" textAlign={"center"}>
-        {isSignUp?"Signup":"Login"}
+        {isSignUp ? "Signup" : "Login"}
       </Typography>
       <form onSubmit={handleSubmit}>
         <Box
@@ -48,13 +49,12 @@ const AuthForm = () => {
           margin="auto"
           alignContent={"center"}
         >
-          {isSignUp && (
+          { !isAdmin && isSignUp && (
             <>
               <FormLabel sx={labelStyle}>Name</FormLabel>
               <TextField
                 variant="standard"
                 margin="normal"
-                type={"email"}
                 name={"name"}
                 onChange={handleChange}
               />
@@ -85,7 +85,7 @@ const AuthForm = () => {
           >
             {isSignUp ? "Signup" : "Login"}
           </Button>
-          <Button
+          {!isAdmin &&<Button
             onClick={() => {
               setIsSignUp(!isSignUp);
             }}
@@ -93,7 +93,7 @@ const AuthForm = () => {
             fullWidth
           >
             Switch to {isSignUp ? "Login" : "Signup"}
-          </Button>
+          </Button>}
         </Box>
       </form>
     </Dialog>

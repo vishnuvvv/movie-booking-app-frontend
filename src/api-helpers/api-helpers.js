@@ -55,3 +55,6 @@ export const getMovieDetails = (id) => {
   const resData = res.data;
   return resData;
 };
+
+
+

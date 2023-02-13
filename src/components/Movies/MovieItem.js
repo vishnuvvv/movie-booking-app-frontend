@@ -25,7 +25,7 @@ const MovieItem = ({ title, realeaseDate, posterUrl,id }) => {
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {new Date(realeaseDate).toDateString()}
+          {new Date(realeaseDate).toDateString() }
         </Typography>
       </CardContent>
       <CardActions>

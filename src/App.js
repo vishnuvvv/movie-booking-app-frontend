@@ -5,8 +5,10 @@ import HomePage from "./components/HomePage.js";
 import Admin from "./components/Admin/Admin.js";
 import Auth from "./components/Auth/Auth.js";
 import Movies from "./components/Movies/Movies.js";
+import Booking from "./components/Bookings/Booking"
 import { useDispatch, useSelector } from "react-redux";
 import { adminActions, userActions } from "./store";
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -30,6 +32,7 @@ const App = () => {
           <Route path="/movies" element={<Movies />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/booking/:id" element={<Booking/> }  />
         </Routes>
       </section>
     </>

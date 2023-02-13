@@ -44,9 +44,8 @@ export const sendAdminAuthRequest = async (data) => {
   return resData;
 };
 
-export const getMovieDetails = (id) => {
-
-  const res = axios.get(`/movie/${id}`).catch((err) => console.log(err));
+export const getMovieDetails = async(id) => {
+  const res = await axios.get(`/movie/${id}`).catch((err) => console.log(err));
 
   if (res.status !== 200) {
     return console.log("Unexpected error occured");
@@ -55,6 +54,3 @@ export const getMovieDetails = (id) => {
   const resData = res.data;
   return resData;
 };
-
-
-

@@ -1,19 +1,33 @@
-import { Box, FormLabel, TextField, Typography } from "@mui/material";
+import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getMovieDetails } from "../../api-helpers/api-helpers";
+import { getMovieDetails, newBooking } from "../../api-helpers/api-helpers";
 
 const Booking = () => {
   const [movie, setMovie] = useState();
+  const [inputs, setInputs] = useState();
   const id = useParams().id;
-  console.log(id);
+  //console.log(id);
 
   useEffect(() => {
     getMovieDetails(id)
       .then((res) => setMovie(res.movie))
       .catch((err) => console.log(err));
   }, [id]);
-  console.log(movie);
+  //console.log(movie);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputs);
+    newBooking({ ...inputs, movie: movie._id })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
@@ -27,7 +41,7 @@ const Booking = () => {
           >
             Book Tickets Of Movie : {movie.title}
           </Typography>
-          <Box display={"flex"} justifyContent={"center"} >
+          <Box display={"flex"} justifyContent={"center"}>
             <Box
               display={"flex"}
               flexDirection="cloumn"
@@ -45,25 +59,43 @@ const Booking = () => {
               <Box width={"80%"} marginTop={3} padding={2}>
                 <Typography paddingTop={2}>{movie.description}</Typography>
                 <Typography fontWeight={"bold"} marginTop={1}>
-                  Starrer:{movie.actors.map((actor) =>" "+ actor + ", ")}
+                  Starrer:{movie.actors.map((actor) => " " + actor + ", ")}
                 </Typography>
                 <Typography fontWeight={"bold"} marginTop={1}>
-                  Release Date : { new Date( movie.releaseDate).toDateString()}
+                  Release Date : {new Date(movie.releaseDate).toDateString()}
                 </Typography>
               </Box>
+            </Box>
 
-              <Box width={"50%"} paddingTop={3}>
-                <form>
-                  <Box padding={5}
+            <Box width={"50%"} paddingTop={3}>
+              <form onSubmit={handleSubmit}>
+                <Box
+                  padding={5}
                   margin={"auto"}
                   display={"flex"}
                   flexDirection={"column"}
-                  >
-                    <FormLabel>Seat Number</FormLabel>
-                    <TextField name="seatNumber"  type={"number"} margin="normal" />
-                  </Box>
-                </form>
-              </Box>
+                >
+                  <FormLabel>Seat Number</FormLabel>
+                  <TextField
+                    name="seatNumber"
+                    type={"number"}
+                    margin="normal"
+                    variant="standard"
+                    onChange={handleChange}
+                  />
+                  <FormLabel>Booking Date</FormLabel>
+                  <TextField
+                    name="date"
+                    type={"date"}
+                    margin="normal"
+                    variant="standard"
+                    onChange={handleChange}
+                  />
+                  <Button type="submit" sx={{ mt: 3 }}>
+                    Book now
+                  </Button>
+                </Box>
+              </form>
             </Box>
           </Box>
         </Fragment>

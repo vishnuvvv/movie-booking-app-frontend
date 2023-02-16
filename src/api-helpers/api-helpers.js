@@ -44,7 +44,7 @@ export const sendAdminAuthRequest = async (data) => {
   return resData;
 };
 
-export const getMovieDetails = async(id) => {
+export const getMovieDetails = async (id) => {
   const res = await axios.get(`/movie/${id}`).catch((err) => console.log(err));
 
   if (res.status !== 200) {
@@ -52,5 +52,23 @@ export const getMovieDetails = async(id) => {
   }
 
   const resData = res.data;
+  return resData;
+};
+
+export const newBooking = async (data) => {
+  const res = await axios
+    .post("/booking", {
+      movie: data.movie,
+      seatNumber: data.seatNumber,
+      date: data.date,
+      user: localStorage.getItem("userId"),
+    })
+    .catch((err) => console.log(err));
+
+  if (res.status !== 201) {
+    return console.log("unexpected error occured!");
+  }
+
+  const resData = await res.data;
   return resData;
 };

@@ -1,19 +1,33 @@
 import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getMovieDetails } from "../../api-helpers/api-helpers";
+import { getMovieDetails, newBooking } from "../../api-helpers/api-helpers";
 
 const Booking = () => {
   const [movie, setMovie] = useState();
+  const [inputs, setInputs] = useState();
   const id = useParams().id;
-  console.log(id);
+  //console.log(id);
 
   useEffect(() => {
     getMovieDetails(id)
       .then((res) => setMovie(res.movie))
       .catch((err) => console.log(err));
   }, [id]);
-  console.log(movie);
+  //console.log(movie);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputs);
+    newBooking({ ...inputs, movie: movie._id })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
@@ -54,7 +68,7 @@ const Booking = () => {
             </Box>
 
             <Box width={"50%"} paddingTop={3}>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <Box
                   padding={5}
                   margin={"auto"}
@@ -67,6 +81,7 @@ const Booking = () => {
                     type={"number"}
                     margin="normal"
                     variant="standard"
+                    onChange={handleChange}
                   />
                   <FormLabel>Booking Date</FormLabel>
                   <TextField
@@ -74,6 +89,7 @@ const Booking = () => {
                     type={"date"}
                     margin="normal"
                     variant="standard"
+                    onChange={handleChange}
                   />
                   <Button type="submit" sx={{ mt: 3 }}>
                     Book now

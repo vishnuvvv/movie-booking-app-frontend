@@ -72,3 +72,42 @@ export const newBooking = async (data) => {
   const resData = await res.data;
   return resData;
 };
+
+export const getUserBookingById = async () => {
+  
+  const id = localStorage.getItem("userId");
+
+  const res = await axios
+    .get(`/user/bookings/${id}`)
+    .catch((err) => console.log(err));
+
+  if(res.status !==200){
+    return console.log("Unexpected error ocuured");
+  }
+
+  const resData = await res.data
+  return resData
+};
+
+
+
+/*
+
+
+
+export const getUserBookingById = async () => {
+  const id = localStorage.getItem("userId");
+
+  const res = await axios
+    .get(`/user/booking/${id}`)
+    .catch((err) => console.log(err));
+
+  if (res && res.status !== 200) {
+    return console.log("Unexpected error occurred");
+  }
+
+  const resData = await res.data;
+  return resData;
+};
+
+*/

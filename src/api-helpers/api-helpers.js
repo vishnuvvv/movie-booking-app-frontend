@@ -90,24 +90,3 @@ export const getUserBookingById = async () => {
 };
 
 
-
-/*
-
-
-
-export const getUserBookingById = async () => {
-  const id = localStorage.getItem("userId");
-
-  const res = await axios
-    .get(`/user/booking/${id}`)
-    .catch((err) => console.log(err));
-
-  if (res && res.status !== 200) {
-    return console.log("Unexpected error occurred");
-  }
-
-  const resData = await res.data;
-  return resData;
-};
-
-*/

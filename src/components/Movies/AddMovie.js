@@ -1,6 +1,13 @@
-import { CheckBox } from "@mui/icons-material";
-import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Checkbox,
+  FormLabel,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
+import { addMovie } from "../../api-helpers/api-helpers";
 
 const AddMovie = () => {
   const [inputs, setInputs] = useState({
@@ -8,18 +15,28 @@ const AddMovie = () => {
     description: "",
     releaseDate: "",
     posterUrl: "",
-    actor: ""
+    featured: false,
   });
+
+  const [actors, setActors] = useState([]);
+  const [actor, setActor] = useState("");
+
   const handleChange = (e) => {
-    const {name,value} =e.target
-    setInputs({...inputs,[name]:value})
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
   };
 
-  console.log(inputs);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputs, actors);
+    addMovie({ ...inputs, actors})
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Box
           width={"50%"}
           padding={10}
@@ -39,43 +56,62 @@ const AddMovie = () => {
           <FormLabel>Title</FormLabel>
           <TextField
             name="title"
+            onChange={handleChange}
             variant="standard"
             margin="normal"
-            onChange={handleChange}
           />
           <FormLabel>Description</FormLabel>
           <TextField
             name="description"
+            onChange={handleChange}
             variant="standard"
             margin="normal"
-            onChange={handleChange}
           />
           <FormLabel>Release Date</FormLabel>
           <TextField
             name="releaseDate"
+            onChange={handleChange}
+            type="date"
             variant="standard"
             margin="normal"
-            onChange={handleChange}
           />
           <FormLabel>Poster Url</FormLabel>
           <TextField
             name="posterUrl"
+            onChange={handleChange}
             variant="standard"
             margin="normal"
-            onChange={handleChange}
           />
           <FormLabel>Actors</FormLabel>
           <Box display={"flex"}>
             <TextField
+              value={actor}
               name="actor"
+              onChange={(e) => setActor(e.target.value)}
               variant="standard"
               margin="normal"
-              onChange={handleChange}
             />
-            <Button>Add</Button>
+            <Button
+              onClick={() => {
+                setActors([...actors, actor]);
+                setActor("");
+              }}
+            >
+              Add
+            </Button>
           </Box>
           <FormLabel>Featured</FormLabel>
-          <CheckBox checked={false} sx={{ mr: "auto" }} />
+          <Checkbox
+            name="featured"
+            checked={inputs.featured}
+            onClick={(e) =>
+              setInputs((prevState) => ({
+                ...prevState,
+                featured: e.target.checked,
+              }))
+            }
+            sx={{ mr: "auto" }}
+          />
           <Button
             variant="contained"
             sx={{
@@ -86,6 +122,7 @@ const AddMovie = () => {
                 bgcolor: "#121217",
               },
             }}
+            type="submit"
           >
             Add New Movie
           </Button>

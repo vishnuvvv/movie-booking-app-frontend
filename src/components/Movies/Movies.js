@@ -39,7 +39,7 @@ const Movies = () => {
               id={movie._id}
               posterUrl={movie.posterUrl}
               title={movie.title}
-              realeaseDate={movie.realeaseDate}
+              releaseDate={movie.releaseDate}
             />
           ))}
       </Box>

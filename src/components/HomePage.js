@@ -41,7 +41,7 @@ const HomePage = () => {
               id={movie._id}
               title={movie.title}
               posterUrl={movie.posterUrl}
-              realeaseDate={movie.realeaseDate}
+              releaseDate={movie.releaseDate}
               key={index}
             />
           ))}
@@ -54,7 +54,7 @@ const HomePage = () => {
           sx={{
             margin: "auto",
             color: "#2b2d42",
-            ":hover": { boxShadow: "10px 10px 20px #ccc" },
+            ":hover": {bgcolor:"#121217", boxShadow: "10px 10px 20px #ccc",},
           }}
         >
           VIEW ALL MOVIES

@@ -8,7 +8,8 @@ import {
 import React from "react";
 import { Link } from "react-router-dom";
 
-const MovieItem = ({ title, realeaseDate, posterUrl,id }) => {
+const MovieItem = ({ title, releaseDate, posterUrl,id }) => {
+  //console.log(releaseDate)
   return (
     <Card
       sx={{
@@ -25,17 +26,20 @@ const MovieItem = ({ title, realeaseDate, posterUrl,id }) => {
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {new Date(realeaseDate).toDateString() }
+          {new Date(releaseDate).toDateString() }
         </Typography>
       </CardContent>
       <CardActions>
         <Button
+          variant ="contained"
+          fullWidth
           LinkComponent={Link}
           to={`/booking/${id}`}
           size="small"
           sx={{
+            bgcolor:"#2b2d42",
             margin: "auto",
-            ":hover": { boxShadow: "10px 10px 20px #ccc" },
+            ":hover": {bgcolor:"#121217" ,boxShadow: "10px 10px 20px #ccc" },
           }}
         >
           Book Now

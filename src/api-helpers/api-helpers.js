@@ -128,16 +128,31 @@ export const addMovie = async (data) => {
       },
       {
         headers: {
-          Authorization:`Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }
     )
     .catch((err) => console.log(err));
 
-    if(res.status !== 201){
-      return console.log("Unexpected error occured!");
-    }
-    
-    const resData =  await res.data
-    return resData
+  if (res.status !== 201) {
+    return console.log("Unexpected error occured!");
+  }
+
+  const resData = await res.data;
+  return resData;
+};
+
+export const getAdminById = async () => {
+  const adminId = localStorage.getItem("adminId");
+
+  const res = await axios
+    .get(`/admin/${adminId}`)
+    .catch((err) => console.log(err));
+
+  if (res.status !== 200) {
+    return console.log("Unexpected error occured");
+  }
+
+  const resData = res.data;
+  return resData;
 };

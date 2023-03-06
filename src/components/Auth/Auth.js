@@ -20,6 +20,8 @@ const Auth = () => {
       .then(onResponseRecieved)
       .catch((err) => console.log(err));
   };
+
+  
   return (
     <div>
       <AuthForm onSubmit={getData} isAdmin={false} />

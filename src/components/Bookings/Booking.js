@@ -1,11 +1,12 @@
 import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getMovieDetails, newBooking } from "../../api-helpers/api-helpers";
 
 const Booking = () => {
   const [movie, setMovie] = useState();
   const [inputs, setInputs] = useState();
+  const navigate = useNavigate();
   const id = useParams().id;
   //console.log(id);
 
@@ -25,7 +26,10 @@ const Booking = () => {
     e.preventDefault();
     console.log(inputs);
     newBooking({ ...inputs, movie: movie._id })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        navigate(`/user`);
+      })
       .catch((err) => console.log(err));
   };
 
@@ -43,12 +47,14 @@ const Booking = () => {
           </Typography>
           <Box display={"flex"} justifyContent={"center"}>
             <Box
-              display={"flex"}
+
               flexDirection="cloumn"
               justifyContent={"column"}
               paddingTop={3}
               width="50%"
+              maxWidth="35%"
               marginRight={"auto"}
+              marginLeft={"20px"}
             >
               <img
                 width={"80%"}

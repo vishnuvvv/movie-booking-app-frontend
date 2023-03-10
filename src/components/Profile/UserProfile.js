@@ -30,7 +30,12 @@ const UserProfile = () => {
   console.log(bookings);
   const handleDelete = (id) => {
     deleteBooking(id)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        setBookings((prevBookings) =>
+          prevBookings.filter((booking) => booking._id !== id)
+        );
+      })
       .catch((err) => console.log(err));
   };
   return (
@@ -69,7 +74,7 @@ const UserProfile = () => {
             </Typography>
           </Box>
         )}
-        {bookings && (bookings.length>0) && (
+        {bookings && bookings.length > 0 && (
           <Box width={"70%"} display={"flex"} flexDirection={"column"}>
             <Typography
               variant="h3"

@@ -42,6 +42,7 @@ const App = () => {
             <>
               <Route path="/user" element={<UserProfile />} />
               <Route path="/booking/:id" element={<Booking />} />
+              <Route path="/movies/booking/:id" element={<Booking />} />
             </>
           )}
           {isAdminLoggedIn && !isUserLoggedIn && (

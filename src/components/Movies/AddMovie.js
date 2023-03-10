@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { addMovie } from "../../api-helpers/api-helpers";
 
 const AddMovie = () => {
@@ -20,6 +21,7 @@ const AddMovie = () => {
 
   const [actors, setActors] = useState([]);
   const [actor, setActor] = useState("");
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,7 +32,7 @@ const AddMovie = () => {
     e.preventDefault();
     console.log(inputs, actors);
     addMovie({ ...inputs, actors})
-      .then((res) => console.log(res))
+      .then(() => navigate(`/user-admin`))
       .catch((err) => console.log(err));
   };
 
